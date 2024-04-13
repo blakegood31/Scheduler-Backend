@@ -34,7 +34,7 @@ create table request(
     status varchar(10) not null ,
     sid VARCHAR(20) not null ,
     cid int not null ,
-    info varchar(200),
+    specialInstructions varchar(200),
     other_orgs varchar(100),
     foreign key (sid) references student (id),
     foreign key (cid) references customer (id)

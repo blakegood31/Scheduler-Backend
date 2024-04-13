@@ -32,7 +32,7 @@ create table request(
     date DATETIME not null,
     event varchar(20) not null ,
     status varchar(10) not null ,
-    sid VARCHAR(20) not null ,
+    sid VARCHAR(20) ,
     cid int not null ,
     specialInstructions varchar(200),
     other_orgs varchar(100),
@@ -50,12 +50,11 @@ create table spirit_calendar(
 );
 
 create table availability(
-    day DATE not null ,
     superfrog_id VARCHAR(25) not null,
-    is_available bool not null,
     start_available DATETIME,
     end_available DATETIME,
-    primary key (day, superfrog_id),
+    is_available bool not null,
+    primary key (superfrog_id, start_available),
     foreign key (superfrog_id) references student(id)
 );
 

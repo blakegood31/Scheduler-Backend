@@ -1,6 +1,7 @@
 package superfrog_scheduler.backend.student;
 
 import jakarta.persistence.*;
+import superfrog_scheduler.backend.request.Request;
 import superfrog_scheduler.backend.superfrog_calendar.SuperfrogCalendar;
 
 import java.io.Serializable;
@@ -23,6 +24,9 @@ public class Student implements Serializable {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},  mappedBy = "superfrog")
     private List<SuperfrogCalendar> availability = new ArrayList<>();
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},  mappedBy = "superfrog")
+    private List<Request> assignedEvents = new ArrayList<>();
+
     public Student() {
 
     }
@@ -32,6 +36,24 @@ public class Student implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setAssignedEvents(List<Request> requests) {
+        this.assignedEvents = requests;
+    }
+
+    public void addAssignedEvent(Request request) {
+        request.setSuperfrog(this);
+        this.assignedEvents.add(request);
+    }
+
+    public void setAvailability(List<SuperfrogCalendar> availability) {
+        this.availability = availability;
+    }
+
+    public void addAvailability(SuperfrogCalendar sfcAvailability) {
+        sfcAvailability.setSuperfrog(this);
+        this.availability.add(sfcAvailability);
     }
 
     public String getName() {

@@ -16,8 +16,8 @@ public class RequestToRequestDtoConverter implements Converter<Request, RequestD
                 source.getDescription(),
                 source.getEventTitle(),
                 source.getStatus(),
-                source.getSup_id(),
-                source.getCust_id(),
+                source.getSuperfrog(),
+                source.getCustomer(),
                 source.getSpecialInstructions(),
                 source.getOther_orgs()
         );

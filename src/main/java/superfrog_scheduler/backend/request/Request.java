@@ -1,6 +1,7 @@
 package superfrog_scheduler.backend.request;
 
 import jakarta.persistence.*;
+import superfrog_scheduler.backend.customer.Customer;
 import superfrog_scheduler.backend.student.Student;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,25 +20,27 @@ public class Request implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "event")
+    @Column(name = "event_title")
     private String eventTitle;
 
     @Column(name = "status")
     private RequestStatus status;
 
-    @Column(name = "sid")
-    private String sup_id;
+    @ManyToOne
+    @JoinColumn(name = "sid")
+    private Student superfrog;
 
-    @Column(name = "cid")
-    private String cust_id;
+    @ManyToOne
+    @JoinColumn(name = "cid")
+    private Customer customer;
 
-    @Column(name = "specialInstructions")
+    @Column(name = "special_instructions")
     private String specialInstructions;
 
     @Column(name = "other_orgs")
     private String other_orgs;
 
-    private LocalDate eventDate;
+    /*private LocalDate eventDate;
 
     private LocalTime startTime;
 
@@ -57,10 +60,7 @@ public class Request implements Serializable {
 
     private Double milesFromTCU;
 
-    private String expenses;
-
-    @ManyToOne
-    private Student superfrog;
+    private String expenses;*/
 
     //Constructors
     public Request(){
@@ -105,20 +105,20 @@ public class Request implements Serializable {
         this.status = status;
     }
 
-    public String getSup_id() {
-        return sup_id;
+    public Student getSuperfrog() {
+        return superfrog;
     }
 
-    public void setSup_id(String sup_id) {
-        this.sup_id = sup_id;
+    public void setSuperfrog(Student sup_id) {
+        this.superfrog = sup_id;
     }
 
-    public String getCust_id() {
-        return cust_id;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCust_id(String cust_id) {
-        this.cust_id = cust_id;
+    public void setCustomer(Customer cust_id) {
+        this.customer = cust_id;
     }
 
     public String getSpecialInstructions() {
@@ -137,7 +137,7 @@ public class Request implements Serializable {
         this.other_orgs = other_orgs;
     }
 
-    public LocalDate getEventDate() {
+   /* public LocalDate getEventDate() {
         return eventDate;
     }
 
@@ -223,13 +223,6 @@ public class Request implements Serializable {
 
     public void setExpenses(String expenses) {
         this.expenses = expenses;
-    }
+    }*/
 
-    public Student getSuperfrog() {
-        return superfrog;
-    }
-
-    public void setSuperfrog(Student superfrog) {
-        this.superfrog = superfrog;
-    }
 }

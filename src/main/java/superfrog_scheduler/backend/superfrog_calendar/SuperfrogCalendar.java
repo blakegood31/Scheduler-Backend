@@ -13,7 +13,7 @@ public class SuperfrogCalendar implements Serializable {
     String id;
 
     @ManyToOne
-    @Column(name = "superfrog_id")
+    @JoinColumn(name = "superfrog_id")
     Student superfrog;
 
     /*@Column(name = "start_available")

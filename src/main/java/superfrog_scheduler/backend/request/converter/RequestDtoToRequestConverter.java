@@ -16,8 +16,8 @@ public class RequestDtoToRequestConverter implements Converter<RequestDto, Reque
         request.setDescription(source.description());
         request.setEventTitle(source.event());
         request.setStatus(source.status());
-        request.setSup_id(source.sup_id());
-        request.setCust_id(source.cust_id());
+        request.setSuperfrog(source.sup_id());
+        request.setCustomer(source.cust_id());
         request.setSpecialInstructions(source.info());
         request.setOther_orgs(source.other_orgs());
         return request;

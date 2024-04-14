@@ -50,11 +50,11 @@ create table spirit_calendar(
 );
 
 create table availability(
+    entry_id VARCHAR(25) primary key ,
     superfrog_id VARCHAR(25) not null,
     start_available DATETIME,
     end_available DATETIME,
     is_available bool not null,
-    primary key (superfrog_id, start_available),
     foreign key (superfrog_id) references student(id)
 );
 
@@ -64,3 +64,5 @@ insert into student values('1001100011', 'Super Frog', 4.3);
 select user();
 
 show variables;
+
+drop table availability;

@@ -14,11 +14,11 @@ public class RequestToRequestDtoConverter implements Converter<Request, RequestD
                 source.getId(),
                 source.getAddress(),
                 source.getDescription(),
-                source.getEvent(),
+                source.getEventTitle(),
                 source.getStatus(),
                 source.getSup_id(),
                 source.getCust_id(),
-                source.getInfo(),
+                source.getSpecialInstructions(),
                 source.getOther_orgs()
         );
         return request;

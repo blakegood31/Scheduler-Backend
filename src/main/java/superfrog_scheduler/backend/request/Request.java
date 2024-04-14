@@ -19,7 +19,7 @@ public class Request implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "eventTitle")
+    @Column(name = "event")
     private String eventTitle;
 
     @Column(name = "status")

@@ -1,8 +1,11 @@
 package superfrog_scheduler.backend.student;
 
 import jakarta.persistence.*;
+import superfrog_scheduler.backend.superfrog_calendar.SuperfrogCalendar;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "student")
@@ -16,6 +19,9 @@ public class Student implements Serializable {
 
     @Column(name = "performance")
     private float performance_rating;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},  mappedBy = "superfrog")
+    private List<SuperfrogCalendar> availability = new ArrayList<>();
 
     public Student() {
 

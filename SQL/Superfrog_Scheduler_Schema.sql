@@ -29,7 +29,8 @@ create table request(
     id VARCHAR(25) primary key not null,
     address varchar(50) not null ,
     description varchar(200) not null ,
-    date DATETIME not null,
+    start_time DATETIME not null,
+    end_time DATETIME not null,
     event_title varchar(20) not null ,
     status int not null ,
     sid VARCHAR(20) ,
@@ -62,7 +63,7 @@ insert into director values(1, 'John Doe');
 insert into student values('1001100011', 'Super Frog', 4.3);
 insert into availability values('1234567890', '1001100011', '2024-04-18 12:30:00', '2024-04-18 17:00:00', true);
 insert into customer values('0987654321', 'V Bo', 'v.bo@tcu.edu', 1234567890);
-insert into request values('3131313131', '123 TCU St, Ft. Worth, TX, 76110', 'A birthday party for superfrog', '2024-04-18 12:30:00', 'Superfrog Birthday', 0, '1001100011', 0987654321, 'Dont tell anyone about the party. Its a surprise!', 'TCU Athletics, CSE, Neeley');
+insert into request values('3131313131', '123 TCU St, Ft. Worth, TX, 76110', 'A birthday party for superfrog', '2024-04-18 12:30:00', '2024-04-18 14:00:00', 'Superfrog Birthday', 0, '1001100011', 0987654321, 'Dont tell anyone about the party. Its a surprise!', 'TCU Athletics, CSE, Neeley');
 
 select user();
 

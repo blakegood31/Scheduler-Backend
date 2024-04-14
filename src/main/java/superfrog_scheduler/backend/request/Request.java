@@ -5,6 +5,7 @@ import superfrog_scheduler.backend.customer.Customer;
 import superfrog_scheduler.backend.student.Student;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -19,6 +20,13 @@ public class Request implements Serializable {
 
     @Column(name = "description")
     private String description;
+
+
+    @Column(name = "start_time")
+    LocalDateTime startTime;
+
+    @Column(name = "end_time")
+    LocalDateTime endTime;
 
     @Column(name = "event_title")
     private String eventTitle;
@@ -87,6 +95,22 @@ public class Request implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public String getEventTitle() {

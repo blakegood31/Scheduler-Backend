@@ -13,8 +13,8 @@ public class SfCalendarToSfCalendarDtoConverter implements Converter<SuperfrogCa
         SuperfrogCalendarDto sfcDto = new SuperfrogCalendarDto(
                 source.getId(),
                 source.getSuperfrog(),
-                source.getStart_time(),
-                source.getEnd_time(),
+                source.getStartTime(),
+                source.getEndTime(),
                 source.getIs_available()
         );
         return sfcDto;

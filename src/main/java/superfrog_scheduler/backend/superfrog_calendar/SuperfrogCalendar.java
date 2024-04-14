@@ -16,14 +16,11 @@ public class SuperfrogCalendar implements Serializable {
     @JoinColumn(name = "superfrog_id")
     Student superfrog;
 
-    /*@Column(name = "start_available")
-    String start_time;*/
     @Column(name = "start_available")
-    LocalDateTime start_time;
-
+    LocalDateTime startTime;
 
     @Column(name = "end_available")
-    LocalDateTime end_time;
+    LocalDateTime endTime;
 
     @Column(name = "is_available")
     boolean is_available;
@@ -44,20 +41,20 @@ public class SuperfrogCalendar implements Serializable {
         return this.superfrog;
     }
 
-    public LocalDateTime getStart_time() {
-        return start_time;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setStart_time(LocalDateTime start_time) {
-        this.start_time = start_time;
+    public void setStartTime(LocalDateTime start_time) {
+        this.startTime = start_time;
     }
 
-    public LocalDateTime getEnd_time() {
-        return end_time;
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
-    public void setEnd_time(LocalDateTime end_time) {
-        this.end_time = end_time;
+    public void setEndTime(LocalDateTime end_time) {
+        this.endTime = end_time;
     }
 
     public boolean getIs_available() {

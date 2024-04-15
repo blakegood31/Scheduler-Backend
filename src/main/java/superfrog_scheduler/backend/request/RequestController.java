@@ -1,11 +1,11 @@
 
 package superfrog_scheduler.backend.request;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import superfrog_scheduler.backend.request.converter.RequestDtoToRequestConverter;
 import superfrog_scheduler.backend.request.converter.RequestToRequestDtoConverter;
+import superfrog_scheduler.backend.request.dto.RequestDto;
 import superfrog_scheduler.backend.system.Result;
 import superfrog_scheduler.backend.system.StatusCode;
 
@@ -36,9 +36,26 @@ public class RequestController {
         return new Result(true, StatusCode.SUCCESS, "Find all success", requestDtos);
     }
 
-    @GetMapping("/requests/{id}") // Use case 7
+    @GetMapping("/requests/{id}") // Find a submitted request by id
     public Result findRequestById(@PathVariable("id") String id) {
-        return null;
+        Request foundRequest = this.requestService.findRequestById(id);
+        RequestDto requestDto = this.requestToRequestDtoConverter.convert(foundRequest);
+        return new Result(true, StatusCode.SUCCESS, "Find One Success", requestDto);
+    }
+
+    @PutMapping("/request/{id}/status/{status}") // Update status of a request
+    public Result updateRequestStatus(@PathVariable String id,@PathVariable RequestStatus status) {
+        Request updateRequest = this.requestService.updateRequestStatus(id, status);
+        RequestDto updateRequestDto = this.requestToRequestDtoConverter.convert(updateRequest);
+        return new Result(true,  StatusCode.SUCCESS, "Status Update Success", updateRequestDto);
+    }
+
+    @PostMapping("/request")
+    public Result addRequest(@RequestBody RequestDto requestDto) { // Add a new request
+        Request newRequest = this.requestDtoToRequestConverter.convert(requestDto);
+        Request savedRequest = this.requestService.save(newRequest);
+        RequestDto saveRequestDto = this.requestToRequestDtoConverter.convert(savedRequest);
+        return new Result(true, StatusCode.SUCCESS, "Add Success", saveRequestDto);
     }
 
 }

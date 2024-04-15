@@ -1,5 +1,6 @@
 package superfrog_scheduler.backend.superfrog_calendar.dto;
 
+import org.springframework.cglib.core.Local;
 import superfrog_scheduler.backend.student.Student;
 
 import java.time.LocalDateTime;

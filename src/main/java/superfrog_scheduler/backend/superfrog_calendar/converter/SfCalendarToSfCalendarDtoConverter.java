@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import superfrog_scheduler.backend.superfrog_calendar.SuperfrogCalendar;
 import superfrog_scheduler.backend.superfrog_calendar.dto.SuperfrogCalendarDto;
 
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class SfCalendarToSfCalendarDtoConverter implements Converter<SuperfrogCalendar, SuperfrogCalendarDto> {
 

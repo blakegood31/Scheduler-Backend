@@ -25,6 +25,9 @@ public class SuperfrogCalendar implements Serializable {
     @Column(name = "is_available")
     boolean is_available;
 
+    public SuperfrogCalendar(){
+    }
+
     public String getId() {
         return id;
     }

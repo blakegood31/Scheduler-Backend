@@ -22,4 +22,9 @@ public class SuperfrogCalendarService {
     public List<SuperfrogCalendar> findAll(){
         return this.sfcRepository.findAll();
     }
+
+    public SuperfrogCalendar save(SuperfrogCalendar newAvailability){
+        newAvailability.setId(idWorker.nextId() + "");
+        return this.sfcRepository.save(newAvailability);
+    }
 }

@@ -14,11 +14,13 @@ public class RequestDtoToRequestConverter implements Converter<RequestDto, Reque
         request.setId(source.id());
         request.setAddress(source.address());
         request.setDescription(source.description());
-        request.setEventTitle(source.event());
+        request.setStartTime(source.startTime());
+        request.setEndTime(source.endTime());
+        request.setEventTitle(source.eventTitle());
         request.setStatus(source.status());
-        request.setSuperfrog(source.sup_id());
-        request.setCustomer(source.cust_id());
-        request.setSpecialInstructions(source.info());
+        request.setSuperfrog(source.superfrog());
+        request.setCustomer(source.customer());
+        request.setSpecialInstructions(source.specialInstructions());
         request.setOther_orgs(source.other_orgs());
         return request;
     }

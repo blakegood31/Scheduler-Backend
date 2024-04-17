@@ -43,6 +43,24 @@ public class RequestService {
                 }).orElseThrow(()->new ObjectNotFoundException("request",id));
     }
 
+    public Request updateRequestInfo(String requestId, Request update){
+        return this.requestRepository.findById(requestId)
+                .map(oldRequest -> {
+                    oldRequest.setAddress(update.getAddress());
+                    oldRequest.setDescription(update.getDescription());
+                    oldRequest.setStartTime(update.getStartTime());
+                    oldRequest.setEndTime(update.getEndTime());
+                    oldRequest.setEventTitle(update.getEventTitle());
+                    oldRequest.setStatus(update.getStatus());
+                    oldRequest.setSuperfrog(update.getSuperfrog());
+                    oldRequest.setCustomer(update.getCustomer());
+                    oldRequest.setSpecialInstructions(update.getSpecialInstructions());
+                    oldRequest.setOther_orgs(update.getOther_orgs());
+                    return this.requestRepository.save(oldRequest);
+                })
+                .orElseThrow(() -> new ObjectNotFoundException("request", requestId));
+    }
+
     public Request save(Request newRequest){ //Will be used to save new request
         return this.requestRepository.save(newRequest);
     }

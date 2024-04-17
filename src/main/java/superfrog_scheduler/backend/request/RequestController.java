@@ -2,6 +2,7 @@
 package superfrog_scheduler.backend.request;
 
 import org.springframework.validation.annotation.Validated;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import superfrog_scheduler.backend.request.converter.RequestDtoToRequestConverter;
 import superfrog_scheduler.backend.request.converter.RequestToRequestDtoConverter;
@@ -56,6 +57,14 @@ public class RequestController {
         Request savedRequest = this.requestService.save(newRequest);
         RequestDto saveRequestDto = this.requestToRequestDtoConverter.convert(savedRequest);
         return new Result(true, StatusCode.SUCCESS, "Add Success", saveRequestDto);
+    }
+
+    @PutMapping("/requests/{requestId}")
+    public Result updateArtifact(@PathVariable String requestId, @Valid @RequestBody RequestDto requestDto){
+        Request update = this.requestDtoToRequestConverter.convert(requestDto);
+        Request updatedRequest = this.requestService.updateRequestInfo(requestId, update);
+        RequestDto updatedRequestDto = this.requestToRequestDtoConverter.convert(updatedRequest);
+        return new Result(true, StatusCode.SUCCESS, "Update Success", updatedRequestDto);
     }
 
 }

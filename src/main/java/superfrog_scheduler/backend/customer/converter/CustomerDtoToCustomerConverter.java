@@ -12,7 +12,8 @@ public class CustomerDtoToCustomerConverter implements Converter<CustomerDto, Cu
     public Customer convert(CustomerDto source){
         Customer customer = new Customer();
         customer.setId(source.id());
-        customer.setName(source.name());
+        customer.setFname(source.fname());
+        customer.setLname(source.lname());
         customer.setEmail(source.email());
         customer.setPhone(source.phone());
         return customer;

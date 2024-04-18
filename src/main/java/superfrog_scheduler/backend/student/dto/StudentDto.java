@@ -1,16 +1,18 @@
 package superfrog_scheduler.backend.student.dto;
 
-public class StudentDto {
+public record StudentDto(String id, String firstName, String lastName, float performanceRating, String phoneNumber, String email){
+}
+/*public class StudentDto {
     private String id;
     private String name;
     private float performanceRating;
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private String email;
+    private String email;*/
 
     // Constructors
-    public StudentDto() {
+   /* public StudentDto() {
     }
 
     public StudentDto(String id, String name, float performanceRating, String firstName, String lastName, String phoneNumber, String email, boolean isInternationalStudent, String paymentPreference) {
@@ -79,4 +81,4 @@ public class StudentDto {
     public void setEmail(String email) {
         this.email = email;
     }
-}
+}*/

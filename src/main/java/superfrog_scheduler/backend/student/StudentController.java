@@ -67,9 +67,10 @@ public class StudentController {
         return new Result(true, StatusCode.SUCCESS, "Profile updated successfully");
     }
 
-    private boolean validateProfile(StudentDto updatedProfile) {
+    private boolean validateProfile(StudentDto updatedStudentDto) {
         // Implement validation logic according to the business rules
         // For example:
+        Student updatedProfile = this.studentDtoToStudentConverter.convert(updatedStudentDto);
         if (updatedProfile.getPhoneNumber() != null && !isValidPhoneNumber(updatedProfile.getPhoneNumber())) {
             return false;
         }
@@ -81,10 +82,11 @@ public class StudentController {
         // Implement phone number validation logic (e.g., using regex)
         // Return t
         // rue if valid, false otherwise
-        return false;
+        return true;
     }
 
-    private void updateProfile(Student student, StudentDto updatedProfile) {
+    private void updateProfile(Student student, StudentDto updatedStudentDto) {
+        Student updatedProfile = this.studentDtoToStudentConverter.convert(updatedStudentDto);
         // Update student entity with the information from the updated profile
         if (updatedProfile.getFirstName() != null) {
             student.setFirstName(updatedProfile.getFirstName());

@@ -14,18 +14,16 @@ public class Student implements Serializable {
     @Id
     private String id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "performance")
-    private float performance_rating;
-
-    // New profile information properties
     @Column(name = "first_name")
     private String firstName;
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "performance")
+    private float performance_rating;
+
+    // New profile information properties
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -51,14 +49,6 @@ public class Student implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public float getPerformance_rating() {

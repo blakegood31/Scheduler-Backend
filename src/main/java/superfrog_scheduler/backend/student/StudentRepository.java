@@ -3,5 +3,5 @@ package superfrog_scheduler.backend.student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StudentRepository extends JpaRepository<Student, String> {
-    // You can add custom queries if needed
+
 }

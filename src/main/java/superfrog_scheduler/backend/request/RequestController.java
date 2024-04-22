@@ -3,7 +3,6 @@ package superfrog_scheduler.backend.request;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import superfrog_scheduler.backend.request.converter.RequestDtoToRequestConverter;
 import superfrog_scheduler.backend.request.converter.RequestToRequestDtoConverter;
@@ -51,14 +50,14 @@ public class RequestController {
         return new Result(true, StatusCode.SUCCESS, "Find One Success", requestDto);
     }
 
-    @PutMapping("/request/{id}/status/{status}") // Update status of a request
+    @PutMapping("/requests/{id}/status/{status}") // Update status of a request
     public Result updateRequestStatus(@PathVariable String id,@PathVariable RequestStatus status) {
         Request updateRequest = this.requestService.updateRequestStatus(id, status);
         RequestDto updateRequestDto = this.requestToRequestDtoConverter.convert(updateRequest);
         return new Result(true,  StatusCode.SUCCESS, "Status Update Success", updateRequestDto);
     }
 
-    @PostMapping("/request")
+    @PostMapping("/requests")
     public Result addRequest(@RequestBody RequestDto requestDto) { // Add a new request
         Request newRequest = this.requestDtoToRequestConverter.convert(requestDto);
         Request savedRequest = this.requestService.save(newRequest);
@@ -67,7 +66,7 @@ public class RequestController {
     }
 
     @PutMapping("/requests/{requestId}")
-    public Result updateArtifact(@PathVariable String requestId, @Valid @RequestBody RequestDto requestDto){
+    public Result updateArtifact(@PathVariable String requestId, @Validated @RequestBody RequestDto requestDto){
         Request update = this.requestDtoToRequestConverter.convert(requestDto);
         Request updatedRequest = this.requestService.updateRequestInfo(requestId, update);
         RequestDto updatedRequestDto = this.requestToRequestDtoConverter.convert(updatedRequest);

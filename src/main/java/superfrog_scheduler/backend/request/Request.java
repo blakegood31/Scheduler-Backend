@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import superfrog_scheduler.backend.customer.Customer;
 import superfrog_scheduler.backend.student.Student;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 
 @Entity
 @Table(name= "request")
@@ -46,13 +49,10 @@ public class Request implements Serializable {
     @Column(name = "other_orgs")
     private String other_orgs;
 
-    /*private LocalDate eventDate;
+    @Column(name = "event_date")
+    private LocalDate eventDate;
 
-    private LocalTime startTime;
-
-    private LocalTime endTime;
-
-    private String eventType;
+    /*private String eventType;
 
     private String clientFName;
 

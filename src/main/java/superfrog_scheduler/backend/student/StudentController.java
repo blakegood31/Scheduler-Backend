@@ -1,3 +1,4 @@
+
 package superfrog_scheduler.backend.student;
 import org.springframework.web.bind.annotation.*;
 import superfrog_scheduler.backend.student.converter.StudentDtoToStudentConverter;

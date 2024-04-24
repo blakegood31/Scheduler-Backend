@@ -3,15 +3,20 @@ package superfrog_scheduler.backend.student.converter;
 import org.springframework.stereotype.Component;
 import superfrog_scheduler.backend.student.Student;
 import superfrog_scheduler.backend.student.dto.StudentDto;
-import org.springframework.core.convert.converter.Converter;
 
 @Component
-public class StudentToStudentDtoConverter implements Converter<Student, StudentDto> {
-    @Override
-    public StudentDto convert(Student source) {
-        StudentDto studentDto = new StudentDto(source.getId(),
-                source.getName(),
-                source.getPerformance_rating());
+public class StudentToStudentDtoConverter {
+
+    public StudentDto convert(Student student) {
+        StudentDto studentDto = new StudentDto(
+                student.getId(),
+                student.getFirstName(),
+                student.getLastName(),
+                student.getPerformance_rating(),
+                student.getPhoneNumber(),
+                student.getEmail()
+        );
+        // Map other properties as needed
         return studentDto;
     }
 }

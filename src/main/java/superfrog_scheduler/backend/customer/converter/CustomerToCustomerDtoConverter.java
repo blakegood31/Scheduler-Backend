@@ -12,7 +12,8 @@ public class CustomerToCustomerDtoConverter implements Converter<Customer, Custo
     public CustomerDto convert(Customer source){
         CustomerDto customerDto = new CustomerDto(
                 source.getId(),
-                source.getName(),
+                source.getFname(),
+                source.getLname(),
                 source.getEmail(),
                 source.getPhone()
         );

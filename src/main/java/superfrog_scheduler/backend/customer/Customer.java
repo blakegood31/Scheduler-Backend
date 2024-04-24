@@ -12,14 +12,17 @@ public class Customer{
     @Id
     private String id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "fname")
+    private String fname;
+
+    @Column(name = "lname")
+    private String lname;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "phone")
-    private int phone;
+    private String phone;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},  mappedBy = "customer")
     private List<Request> requests = new ArrayList<>();
@@ -40,12 +43,20 @@ public class Customer{
         this.requests.add(request);
     }
 
-    public String getName() {
-        return name;
+    public String getFname() {
+        return fname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
     public String getEmail() {
@@ -56,11 +67,11 @@ public class Customer{
         this.email = email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 }

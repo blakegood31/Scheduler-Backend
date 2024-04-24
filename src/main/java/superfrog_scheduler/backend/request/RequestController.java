@@ -66,7 +66,7 @@ public class RequestController {
     }
 
     @PutMapping("/requests/{requestId}")
-    public Result updateArtifact(@PathVariable String requestId, @Validated @RequestBody RequestDto requestDto){
+    public Result updateRequest(@PathVariable String requestId, @Validated @RequestBody RequestDto requestDto){
         Request update = this.requestDtoToRequestConverter.convert(requestDto);
         Request updatedRequest = this.requestService.updateRequestInfo(requestId, update);
         RequestDto updatedRequestDto = this.requestToRequestDtoConverter.convert(updatedRequest);
@@ -93,6 +93,7 @@ public class RequestController {
         RequestDto updatedRequestDto = this.requestToRequestDtoConverter.convert(updatedRequest);
         return new Result(true, StatusCode.SUCCESS, "Status Update Success", updatedRequestDto);
     }
+  
     @GetMapping("/appearance-requests/available")
     public Result findAvailableAppearanceRequests() {
         List<Request> availableRequests = requestService.findApprovedRequestsNotAssigned();
@@ -101,12 +102,14 @@ public class RequestController {
                 .collect(Collectors.toList());
         return new Result(true, StatusCode.SUCCESS, "Available Appearance Requests Found", requestDtos);
     }
+  
     @PostMapping("/sign-up")
     public ResponseEntity<String> signUpForAppearanceRequest(@RequestParam("requestId") String requestId,
                                                              @RequestParam("studentId") String studentId) {
         requestService.signUpForAppearanceRequest(requestId, studentId);
         return ResponseEntity.ok("Signed up successfully");
     }
+  
     @PutMapping("/cancel-appearance-signup/{requestId}/{studentId}")
     public ResponseEntity<String> cancelAppearanceSignUp(@PathVariable String requestId, @PathVariable String studentId) {
         try {

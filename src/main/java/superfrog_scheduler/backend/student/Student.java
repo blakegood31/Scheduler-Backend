@@ -27,6 +27,9 @@ public class Student implements Serializable {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},  mappedBy = "superfrog")
     private List<Request> assignedEvents = new ArrayList<>();
 
+    private boolean active;
+
+
     public Student() {
 
     }
@@ -70,5 +73,13 @@ public class Student implements Serializable {
 
     public void setPerformance_rating(float performance_rating) {
         this.performance_rating = performance_rating;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

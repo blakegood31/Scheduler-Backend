@@ -38,7 +38,9 @@ public class Student implements Serializable {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "superfrog")
     private List<Request> assignedEvents = new ArrayList<>();
 
-    // Constructors, getters, and setters
+    private boolean active;
+
+
     public Student() {
 
     }
@@ -91,4 +93,11 @@ public class Student implements Serializable {
         this.email = email;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

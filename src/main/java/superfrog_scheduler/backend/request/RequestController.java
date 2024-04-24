@@ -59,11 +59,10 @@ public class RequestController {
     }
 
     @PutMapping("/requests/{requestId}")
-    public Result updateArtifact(@PathVariable String requestId, @Validated @RequestBody RequestDto requestDto){
+    public Result updateRequest(@PathVariable String requestId, @Validated @RequestBody RequestDto requestDto){
         Request update = this.requestDtoToRequestConverter.convert(requestDto);
         Request updatedRequest = this.requestService.updateRequestInfo(requestId, update);
         RequestDto updatedRequestDto = this.requestToRequestDtoConverter.convert(updatedRequest);
         return new Result(true, StatusCode.SUCCESS, "Update Success", updatedRequestDto);
     }
-
 }

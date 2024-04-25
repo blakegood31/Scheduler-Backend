@@ -65,4 +65,10 @@ public class RequestService {
         return this.requestRepository.save(newRequest);
     }
 
+    public Request cancelRequest(String requestId){
+        Request cancel = this.requestRepository.findById(requestId).orElseThrow(() -> new ObjectNotFoundException("request", requestId));
+        cancel.setStatus(RequestStatus.CANCELLED);
+        return cancel;
+    }
+
 }

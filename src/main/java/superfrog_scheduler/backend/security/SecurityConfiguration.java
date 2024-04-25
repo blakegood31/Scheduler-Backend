@@ -57,6 +57,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE, "/users/**").hasAuthority("ROLE_admin")
                         .requestMatchers(HttpMethod.GET, "/requests/{id}").hasAnyAuthority("ROLE_admin", "ROLE_superfrog", "ROLE_customer")
                         .requestMatchers(HttpMethod.PUT, "/requests/{requestId}").hasAnyAuthority("ROLE_admin", "ROLE_customer")
+                        .requestMatchers(HttpMethod.GET, "/requests/approved").hasAuthority("ROLE_admin")
+                        .requestMatchers(HttpMethod.PUT, "/requests/{requestId}/cancel").hasAuthority("ROLE_admin")
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable())

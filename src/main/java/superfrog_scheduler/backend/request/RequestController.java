@@ -65,4 +65,24 @@ public class RequestController {
         RequestDto updatedRequestDto = this.requestToRequestDtoConverter.convert(updatedRequest);
         return new Result(true, StatusCode.SUCCESS, "Update Success", updatedRequestDto);
     }
+
+    @GetMapping("/requests/approved")
+    public Result findApprovedRequests(){
+        List<Request> approvedRequestDtos = this.requestService.findAll();
+        approvedRequestDtos.removeIf(request ->
+            !(request.getStatus() == RequestStatus.APPROVED || request.getStatus() == RequestStatus.ASSIGNED)
+        );
+        approvedRequestDtos.stream()
+                .map(this.requestToRequestDtoConverter::convert)
+                .collect(Collectors.toList());
+        return new Result(true, StatusCode.SUCCESS, "Find all success", approvedRequestDtos);
+    }
+
+    @PutMapping("/requests/{requestId}/cancel")
+    public Result cancelRequest(@PathVariable String requestId){
+        Request canceledRequest = this.requestService.updateRequestStatus(requestId, RequestStatus.CANCELLED);
+        RequestDto canceledRequestDto = this.requestToRequestDtoConverter.convert(canceledRequest);
+        return new Result(true, StatusCode.SUCCESS, "Cancel Request Success", canceledRequestDto);
+    }
+
 }

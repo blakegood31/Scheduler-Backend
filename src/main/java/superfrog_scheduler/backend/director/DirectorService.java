@@ -2,7 +2,6 @@ package superfrog_scheduler.backend.director;
 
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +13,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class DirectorService implements UserDetailsService {
+public class DirectorService {
     private final DirectorRepository directorRepository;
 
     private final StudentRepository studentRepository;

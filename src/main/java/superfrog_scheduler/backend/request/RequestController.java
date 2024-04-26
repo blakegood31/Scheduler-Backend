@@ -1,6 +1,7 @@
 
 package superfrog_scheduler.backend.request;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import superfrog_scheduler.backend.request.converter.RequestDtoToRequestConverter;
@@ -8,6 +9,9 @@ import superfrog_scheduler.backend.request.converter.RequestToRequestDtoConverte
 import superfrog_scheduler.backend.request.dto.RequestDto;
 import superfrog_scheduler.backend.system.Result;
 import superfrog_scheduler.backend.system.StatusCode;
+import superfrog_scheduler.backend.student.Student;
+import superfrog_scheduler.backend.student.StudentRepository;
+import superfrog_scheduler.backend.system.exceptions.ObjectNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,13 +22,16 @@ public class RequestController {
     private final RequestService requestService;
     private final RequestToRequestDtoConverter requestToRequestDtoConverter;
     private final RequestDtoToRequestConverter requestDtoToRequestConverter;
+    //private final StudentRepository studentRepository;
 
     //Constructor
-    public RequestController(RequestService requestService, RequestToRequestDtoConverter requestToRequestDtoConverter, RequestDtoToRequestConverter requestDtoToRequestConverter){
+    public RequestController(RequestService requestService, RequestToRequestDtoConverter requestToRequestDtoConverter, RequestDtoToRequestConverter requestDtoToRequestConverter) {
         this.requestService = requestService;
         this.requestToRequestDtoConverter = requestToRequestDtoConverter;
         this.requestDtoToRequestConverter = requestDtoToRequestConverter;
+        //this.studentRepository = studentRepository; // Initialize studentRepository
     }
+
 
     //Signature Handler methods
     @GetMapping("/requests")
@@ -84,5 +91,56 @@ public class RequestController {
         RequestDto canceledRequestDto = this.requestToRequestDtoConverter.convert(canceledRequest);
         return new Result(true, StatusCode.SUCCESS, "Cancel Request Success", canceledRequestDto);
     }
+
+
+    /*@GetMapping("/student/requests")
+    public Result findStudentAssignedRequests(@RequestParam("studentId") String studentId) {
+        Student student = studentRepository.findById(studentId).orElse(null);
+        if (student != null) {
+            List<Request> assignedRequests = this.requestService.findRequestsByStudent(student);
+            List<RequestDto> assignedRequestDtos = assignedRequests.stream()
+                    .map(this.requestToRequestDtoConverter::convert)
+                    .collect(Collectors.toList());
+            return new Result(true, StatusCode.SUCCESS, "Assigned Requests Found", assignedRequestDtos);
+        } else {
+            return new Result(false, StatusCode.NOT_FOUND, "Student not found", null);
+        }
+    }
+
+    @PutMapping("/student/request/{id}/status/{status}")
+    public Result updateStudentRequestStatus(@PathVariable String id, @PathVariable RequestStatus status) {
+        Request updatedRequest = this.requestService.updateStudentRequestStatus(id, status);
+        RequestDto updatedRequestDto = this.requestToRequestDtoConverter.convert(updatedRequest);
+        return new Result(true, StatusCode.SUCCESS, "Status Update Success", updatedRequestDto);
+    }
+
+    @GetMapping("/appearance-requests/available")
+    public Result findAvailableAppearanceRequests() {
+        List<Request> availableRequests = requestService.findApprovedRequestsNotAssigned();
+        List<RequestDto> requestDtos = availableRequests.stream()
+                .map(requestToRequestDtoConverter::convert)
+                .collect(Collectors.toList());
+        return new Result(true, StatusCode.SUCCESS, "Available Appearance Requests Found", requestDtos);
+    }
+
+    @PostMapping("/sign-up")
+    public ResponseEntity<String> signUpForAppearanceRequest(@RequestParam("requestId") String requestId,
+                                                             @RequestParam("studentId") String studentId) {
+        requestService.signUpForAppearanceRequest(requestId, studentId);
+        return ResponseEntity.ok("Signed up successfully");
+    }
+
+    @PutMapping("/cancel-appearance-signup/{requestId}/{studentId}")
+    public ResponseEntity<String> cancelAppearanceSignUp(@PathVariable String requestId, @PathVariable String studentId) {
+        try {
+            // Call the service method to cancel appearance sign-up
+            requestService.cancelAppearanceSignUp(requestId, studentId);
+            return ResponseEntity.ok("Cancellation successful");
+        } catch (ObjectNotFoundException e) {
+            // Handle exception and return appropriate response
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }*/
 
 }

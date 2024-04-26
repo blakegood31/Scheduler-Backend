@@ -2,22 +2,28 @@ package superfrog_scheduler.backend.request;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import superfrog_scheduler.backend.student.Student;
+import superfrog_scheduler.backend.student.StudentRepository;
 import superfrog_scheduler.backend.utils.IdWorker;
 import superfrog_scheduler.backend.system.exceptions.ObjectNotFoundException;
 import superfrog_scheduler.backend.request.RequestRepository;
 import superfrog_scheduler.backend.request.Request;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @Transactional
 public class RequestService {
     private final RequestRepository requestRepository;
+    private final StudentRepository studentRepository;
     private final IdWorker idWorker;
 
     //Constructor
-    public RequestService(RequestRepository requestRepository){
+    public RequestService(RequestRepository requestRepository, StudentRepository studentRepository){
         this.requestRepository = requestRepository;
+        this.studentRepository = studentRepository;
         this.idWorker = new IdWorker();
     }
 
@@ -31,9 +37,9 @@ public class RequestService {
                 .orElseThrow(() -> new ObjectNotFoundException("request", id));
     }
 
-    public List<Request> findByStatus(RequestStatus status){ // Find a submitted request by status
+    /*public List<Request> findByStatus(RequestStatus status){ // Find a submitted request by status
         return this.requestRepository.findByStatus(status);
-    }
+    }*/
 
     public Request updateRequestStatus(String id, RequestStatus status){ //Update status of a request
         return this.requestRepository.findById(id).map(
@@ -64,11 +70,74 @@ public class RequestService {
     public Request save(Request newRequest){ //Will be used to save new request
         return this.requestRepository.save(newRequest);
     }
-
-    public Request cancelRequest(String requestId){
-        Request cancel = this.requestRepository.findById(requestId).orElseThrow(() -> new ObjectNotFoundException("request", requestId));
-        cancel.setStatus(RequestStatus.CANCELLED);
-        return cancel;
+    /*public List<Request> findRequestsByStudent(Student student) {
+        return this.requestRepository.findBySuperfrog(student);
     }
+    public Request updateStudentRequestStatus(String id, RequestStatus status) {
+        return this.requestRepository.findById(id)
+                .map(request -> {
+                    // Check if the request belongs to the logged-in student
+                    if (request.getSuperfrog().getId().equals(loggedInStudentId)) {
+                        request.setStatus(status);
+                        return this.requestRepository.save(request);
+                    } else {
+                        throw new UnauthorizedAccessException("You are not authorized to update this request.");
+                    }
+                })
+                .orElseThrow(() -> new ObjectNotFoundException("request", id));
+    }
+    public List<Request> findApprovedRequestsNotAssigned() {
+        return requestRepository.findByStatusAndSuperfrogIsNull(RequestStatus.APPROVED);
+    }
+    // Method to sign up for an appearance request
+    public void signUpForAppearanceRequest(String requestId, String studentId) {
+        // Fetch the request by ID
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(() -> new ObjectNotFoundException("Request", requestId));
+
+        // Fetch the student by ID
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new ObjectNotFoundException("Student", studentId));
+
+
+        // If validation passes, sign up the student for the request
+        request.setSuperfrog(student);
+        requestRepository.save(request);
+    }
+    public void cancelAppearanceSignUp(String requestId, String studentId) throws ObjectNotFoundException {
+        // Fetch the assigned request by ID
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(() -> new ObjectNotFoundException("Request", requestId));
+
+        // Fetch the student by ID
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new ObjectNotFoundException("Student", studentId));
+
+        // Validate cancellation (at least 2 days prior to the event date)
+        if (!isCancellationAllowed(request.getStartTime())) {
+            throw new ObjectNotFoundException("Cancellation", "Cancellation is not allowed less than 2 days before the event.");
+        }
+
+        // Update request status to "Approved" and remove from student's schedule
+        request.setStatus(RequestStatus.APPROVED);
+        request.setSuperfrog(null); // Remove SuperFrog Student assignment
+        requestRepository.save(request);
+        // Notify relevant actors about cancellation
+        // Implement notification logic here
+    }
+
+
+
+
+    // Method to check if cancellation is allowed (at least 2 days prior to the event date)
+    private boolean isCancellationAllowed(LocalDateTime eventDateTime) {
+        // Calculate the difference in days between current date and event date
+        LocalDate currentDate = LocalDate.now();
+        LocalDate eventDate = eventDateTime.toLocalDate();
+        long daysDifference = java.time.temporal.ChronoUnit.DAYS.between(currentDate, eventDate);
+
+        // Cancellation is allowed if the difference is at least 2 days
+        return daysDifference >= 2;
+    }*/
 
 }

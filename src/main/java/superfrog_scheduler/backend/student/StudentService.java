@@ -32,7 +32,7 @@ public class StudentService {
         return this.studentRepository.save(student);
     }
 
-    public Student updateProfileInformation(String studentId, String firstName, String lastName, String phoneNumber, String email) {
+    /*public Student updateProfileInformation(String studentId, String firstName, String lastName, String phoneNumber, String email) {
         Student student = findById(studentId);
         // Update the student's profile information
         student.setFirstName(firstName);
@@ -41,7 +41,7 @@ public class StudentService {
         student.setEmail(email);
         // Save and return the updated student
         return save(student);
-    }
+    }*/
 
     public void assignAvailability(String studentId, String calendarId) {
         // Implement this method if needed

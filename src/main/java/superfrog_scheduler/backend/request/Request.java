@@ -11,7 +11,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name= "request")
-public class Request implements Serializable {
+public class Request {
 
     @Id
     private String id;
@@ -49,8 +49,8 @@ public class Request implements Serializable {
     @Column(name = "other_orgs")
     private String other_orgs;
 
-    @Column(name = "event_date")
-    private LocalDate eventDate;
+   /* @Column(name = "event_date")
+    private LocalDate eventDate;*/
 
     /*private String eventType;
 

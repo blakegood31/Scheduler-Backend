@@ -11,9 +11,10 @@ public class DirToDirDtoConverter implements Converter<Director, DirectorDto> {
     public DirectorDto convert(Director source) {
         final DirectorDto directorDto = new DirectorDto(
                 source.getId(),
-                source.getEmail(),
+                source.getName());
+                /*source.getEmail(),
                 source.isActive(),
-                source.getRoles());
+                source.getRoles());*/
         return directorDto;
     }
 }

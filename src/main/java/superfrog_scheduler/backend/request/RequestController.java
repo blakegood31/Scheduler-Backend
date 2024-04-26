@@ -22,14 +22,14 @@ public class RequestController {
     private final RequestService requestService;
     private final RequestToRequestDtoConverter requestToRequestDtoConverter;
     private final RequestDtoToRequestConverter requestDtoToRequestConverter;
-    private final StudentRepository studentRepository;
+    //private final StudentRepository studentRepository;
 
     //Constructor
-    public RequestController(RequestService requestService, RequestToRequestDtoConverter requestToRequestDtoConverter, RequestDtoToRequestConverter requestDtoToRequestConverter, StudentRepository studentRepository) {
+    public RequestController(RequestService requestService, RequestToRequestDtoConverter requestToRequestDtoConverter, RequestDtoToRequestConverter requestDtoToRequestConverter) {
         this.requestService = requestService;
         this.requestToRequestDtoConverter = requestToRequestDtoConverter;
         this.requestDtoToRequestConverter = requestDtoToRequestConverter;
-        this.studentRepository = studentRepository; // Initialize studentRepository
+        //this.studentRepository = studentRepository; // Initialize studentRepository
     }
 
 
@@ -73,7 +73,27 @@ public class RequestController {
         return new Result(true, StatusCode.SUCCESS, "Update Success", updatedRequestDto);
     }
 
-    @GetMapping("/student/requests")
+    @GetMapping("/requests/approved")
+    public Result findApprovedRequests(){
+        List<Request> approvedRequestDtos = this.requestService.findAll();
+        approvedRequestDtos.removeIf(request ->
+            !(request.getStatus() == RequestStatus.APPROVED || request.getStatus() == RequestStatus.ASSIGNED)
+        );
+        approvedRequestDtos.stream()
+                .map(this.requestToRequestDtoConverter::convert)
+                .collect(Collectors.toList());
+        return new Result(true, StatusCode.SUCCESS, "Find all success", approvedRequestDtos);
+    }
+
+    @PutMapping("/requests/{requestId}/cancel")
+    public Result cancelRequest(@PathVariable String requestId){
+        Request canceledRequest = this.requestService.updateRequestStatus(requestId, RequestStatus.CANCELLED);
+        RequestDto canceledRequestDto = this.requestToRequestDtoConverter.convert(canceledRequest);
+        return new Result(true, StatusCode.SUCCESS, "Cancel Request Success", canceledRequestDto);
+    }
+
+
+    /*@GetMapping("/student/requests")
     public Result findStudentAssignedRequests(@RequestParam("studentId") String studentId) {
         Student student = studentRepository.findById(studentId).orElse(null);
         if (student != null) {
@@ -93,7 +113,7 @@ public class RequestController {
         RequestDto updatedRequestDto = this.requestToRequestDtoConverter.convert(updatedRequest);
         return new Result(true, StatusCode.SUCCESS, "Status Update Success", updatedRequestDto);
     }
-  
+
     @GetMapping("/appearance-requests/available")
     public Result findAvailableAppearanceRequests() {
         List<Request> availableRequests = requestService.findApprovedRequestsNotAssigned();
@@ -102,14 +122,14 @@ public class RequestController {
                 .collect(Collectors.toList());
         return new Result(true, StatusCode.SUCCESS, "Available Appearance Requests Found", requestDtos);
     }
-  
+
     @PostMapping("/sign-up")
     public ResponseEntity<String> signUpForAppearanceRequest(@RequestParam("requestId") String requestId,
                                                              @RequestParam("studentId") String studentId) {
         requestService.signUpForAppearanceRequest(requestId, studentId);
         return ResponseEntity.ok("Signed up successfully");
     }
-  
+
     @PutMapping("/cancel-appearance-signup/{requestId}/{studentId}")
     public ResponseEntity<String> cancelAppearanceSignUp(@PathVariable String requestId, @PathVariable String studentId) {
         try {
@@ -121,6 +141,6 @@ public class RequestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-    }
+    }*/
 
 }

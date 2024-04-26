@@ -19,7 +19,7 @@ public class Director implements Serializable {
     private String name;
 
 
-    @NotEmpty(message = "Email is required.")
+    /*@NotEmpty(message = "Email is required.")
     private String email;
 
 
@@ -29,7 +29,7 @@ public class Director implements Serializable {
     private boolean active;
 
     @NotEmpty(message = "Roles are required.")
-    private String roles;
+    private String roles;*/
 
     public Director() {
     }
@@ -43,7 +43,7 @@ public class Director implements Serializable {
     }
 
 
-    public String getEmail() {
+    /*public String getEmail() {
         return email;
     }
 
@@ -74,6 +74,7 @@ public class Director implements Serializable {
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }*/
 
     public String getName() {
         return name;

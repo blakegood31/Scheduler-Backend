@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("${api.endpoint.base-url}/users")
+@RequestMapping("/directors")
 public class DirectorController {
     private final DirectorService directorService;
 
@@ -27,7 +27,7 @@ public class DirectorController {
     }
 
     @GetMapping
-    public Result findAllUsers() {
+    public Result findAllDirectors() {
         List<Director> foundUsers = this.directorService.findAll();
         List<DirectorDto> dirDtos = foundUsers.stream()
                 .map(this.dirToDirDtoConverter::convert)
@@ -37,13 +37,13 @@ public class DirectorController {
     }
 
     @GetMapping("/{id}")
-    public Result findUserById(@PathVariable String id) {
+    public Result findDirectorById(@PathVariable String id) {
         Director foundUser = this.directorService.findById(id);
         DirectorDto dirDto = this.dirToDirDtoConverter.convert(foundUser);
         return new Result(true, StatusCode.SUCCESS, "Find One Success", dirDto);
     }
 
-    @DeleteMapping("/{id}")
+    /*@DeleteMapping("/{id}")
     public Result deleteUser(@PathVariable String id) {
         this.directorService.delete(id);
         return new Result(true, StatusCode.SUCCESS, "Delete Success");
@@ -76,5 +76,5 @@ public class DirectorController {
         Director updatedUser = this.directorService.enableUser(email);
         DirectorDto updatedDirDto = this.dirToDirDtoConverter.convert(updatedUser);
         return new Result(true, StatusCode.SUCCESS, "Enable User Success", updatedDirDto);
-    }
+    }*/
 }

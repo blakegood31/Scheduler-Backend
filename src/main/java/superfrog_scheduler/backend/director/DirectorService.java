@@ -16,14 +16,14 @@ import java.util.List;
 public class DirectorService {
     private final DirectorRepository directorRepository;
 
-    private final StudentRepository studentRepository;
+    /*private final StudentRepository studentRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;*/
 
-    public DirectorService(DirectorRepository directorRepository, StudentRepository studentRepository, PasswordEncoder passwordEncoder) {
+    public DirectorService(DirectorRepository directorRepository) {
         this.directorRepository = directorRepository;
-        this.studentRepository = studentRepository;
-        this.passwordEncoder = passwordEncoder;
+        /*this.studentRepository = studentRepository;
+        this.passwordEncoder = passwordEncoder;*/
     }
 
     public List<Director> findAll() {
@@ -35,7 +35,7 @@ public class DirectorService {
                 .orElseThrow(() -> new ObjectNotFoundException("user", id));
     }
 
-    public Director disableUser(String email) throws UsernameNotFoundException {
+    /*public Director disableUser(String email) throws UsernameNotFoundException {
         Director userToBeDisabled = this.directorRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("username " + email + " is not found."));
         userToBeDisabled.setActive(false);
         this.directorRepository.save(userToBeDisabled);
@@ -44,9 +44,9 @@ public class DirectorService {
         studentToBeDisabled.setActive(false);
         this.studentRepository.save(studentToBeDisabled);
         return userToBeDisabled;
-    }
+    }*/
 
-    public Director enableUser(String email) throws UsernameNotFoundException {
+    /*public Director enableUser(String email) throws UsernameNotFoundException {
         Director userToBeEnabled = this.directorRepository.findByEmail(email).orElseThrow();
         userToBeEnabled.setActive(true);
         UserDetails userToBeEnabledDetails = new MyUserPrincipal(userToBeEnabled);
@@ -60,9 +60,9 @@ public class DirectorService {
     public Director save(Director newUser) {
         newUser.setPassword(this.passwordEncoder.encode(newUser.getPassword()));
         return this.directorRepository.save(newUser);
-    }
+    }*/
 
-    public Director update(String id, Director update) {
+    /*public Director update(String id, Director update) {
         Director oldUser = this.directorRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("user", id));
         oldUser.setActive(update.isActive());
@@ -74,13 +74,13 @@ public class DirectorService {
         this.directorRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("user", id));
         this.directorRepository.deleteById(id);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return this.directorRepository.findByEmail(email)
                 .map(Director -> new MyUserPrincipal(Director))
                 .orElseThrow(() -> new UsernameNotFoundException("username " + email + " is not found."));
 
-    }
+    }*/
 }

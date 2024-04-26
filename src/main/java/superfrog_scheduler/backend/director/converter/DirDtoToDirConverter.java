@@ -10,9 +10,11 @@ public class DirDtoToDirConverter implements Converter<DirectorDto, Director>{
     @Override
     public Director convert(DirectorDto source) {
         Director director = new Director();
-        director.setEmail(source.email());
+        director.setName(source.name());
+        director.setId(source.id());
+        /*director.setEmail(source.email());
         director.setActive(source.active());
-        director.setRoles(source.roles());
+        director.setRoles(source.roles());*/
         return director;
     }
 }

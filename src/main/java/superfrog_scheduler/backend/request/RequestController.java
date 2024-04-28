@@ -141,6 +141,35 @@ public class RequestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-    }*/
+    }
+   @PutMapping("/requests/{requestId}/complete")
+    public Result markRequestAsCompleted(@PathVariable String requestId) {
+        try {
+            requestService.markAppearanceRequestCompleted(requestId);
+            return new Result(true, StatusCode.SUCCESS, "Appearance request marked as completed successfully", null);
+        } catch (ObjectNotFoundException e) {
+            return new Result(false, StatusCode.NOT_FOUND, e.getMessage(), null);
+        }
+    }
+    @PutMapping("/requests/{requestId}/incomplete")
+    public Result markRequestAsIncomplete(@PathVariable String requestId) {
+        try {
+            requestService.markAppearanceAsIncomplete(requestId);
+            return new Result(true, StatusCode.SUCCESS, "Appearance request marked as incomplete successfully", null);
+        } catch (ObjectNotFoundException e) {
+            return new Result(false, StatusCode.NOT_FOUND, e.getMessage(), null);
+        }
+    }
+
+    @PutMapping("/requests/{requestId}/reverse-decision")
+    public Result reverseApprovalRejectionDecision(@PathVariable String requestId) {
+        try {
+            Request updatedRequest = requestService.reverseApprovalRejectionDecision(requestId);
+            RequestDto updatedRequestDto = requestToRequestDtoConverter.convert(updatedRequest);
+            return new Result(true, StatusCode.SUCCESS, "Approval/rejection decision reversed successfully", updatedRequestDto);
+        } catch (ObjectNotFoundException e) {
+            return new Result(false, StatusCode.NOT_FOUND, e.getMessage(), null);
+        }
+    } */
 
 }

@@ -36,7 +36,7 @@ public class RequestController {
 
     //Signature Handler methods
     @GetMapping("/requests")
-    public Result findAllRequests(){
+    public Result findAllRequests() {
         List<Request> requestDtos = this.requestService.findAll();
         requestDtos.stream()
                 .map(this.requestToRequestDtoConverter::convert)
@@ -52,10 +52,10 @@ public class RequestController {
     }
 
     @PutMapping("/request/{id}/status/{status}") // Update status of a request
-    public Result updateRequestStatus(@PathVariable String id,@PathVariable RequestStatus status) {
+    public Result updateRequestStatus(@PathVariable String id, @PathVariable RequestStatus status) {
         Request updateRequest = this.requestService.updateRequestStatus(id, status);
         RequestDto updateRequestDto = this.requestToRequestDtoConverter.convert(updateRequest);
-        return new Result(true,  StatusCode.SUCCESS, "Status Update Success", updateRequestDto);
+        return new Result(true, StatusCode.SUCCESS, "Status Update Success", updateRequestDto);
     }
 
     @PostMapping("/request")
@@ -67,7 +67,7 @@ public class RequestController {
     }
 
     @PutMapping("/requests/{requestId}")
-    public Result updateArtifact(@PathVariable String requestId, @Valid @RequestBody RequestDto requestDto){
+    public Result updateArtifact(@PathVariable String requestId, @Valid @RequestBody RequestDto requestDto) {
         Request update = this.requestDtoToRequestConverter.convert(requestDto);
         Request updatedRequest = this.requestService.updateRequestInfo(requestId, update);
         RequestDto updatedRequestDto = this.requestToRequestDtoConverter.convert(updatedRequest);
@@ -94,6 +94,7 @@ public class RequestController {
         RequestDto updatedRequestDto = this.requestToRequestDtoConverter.convert(updatedRequest);
         return new Result(true, StatusCode.SUCCESS, "Status Update Success", updatedRequestDto);
     }
+
     @GetMapping("/appearance-requests/available")
     public Result findAvailableAppearanceRequests() {
         List<Request> availableRequests = requestService.findApprovedRequestsNotAssigned();
@@ -102,12 +103,14 @@ public class RequestController {
                 .collect(Collectors.toList());
         return new Result(true, StatusCode.SUCCESS, "Available Appearance Requests Found", requestDtos);
     }
+
     @PostMapping("/sign-up")
     public ResponseEntity<String> signUpForAppearanceRequest(@RequestParam("requestId") String requestId,
                                                              @RequestParam("studentId") String studentId) {
         requestService.signUpForAppearanceRequest(requestId, studentId);
         return ResponseEntity.ok("Signed up successfully");
     }
+
     @PutMapping("/cancel-appearance-signup/{requestId}/{studentId}")
     public ResponseEntity<String> cancelAppearanceSignUp(@PathVariable String requestId, @PathVariable String studentId) {
         try {
@@ -119,6 +122,36 @@ public class RequestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
+    }
+
+    @PutMapping("/requests/{requestId}/complete")
+    public Result markRequestAsCompleted(@PathVariable String requestId) {
+        try {
+            requestService.markAppearanceRequestCompleted(requestId);
+            return new Result(true, StatusCode.SUCCESS, "Appearance request marked as completed successfully", null);
+        } catch (ObjectNotFoundException e) {
+            return new Result(false, StatusCode.NOT_FOUND, e.getMessage(), null);
+        }
+    }
+    @PutMapping("/requests/{requestId}/incomplete")
+    public Result markRequestAsIncomplete(@PathVariable String requestId) {
+        try {
+            requestService.markAppearanceAsIncomplete(requestId);
+            return new Result(true, StatusCode.SUCCESS, "Appearance request marked as incomplete successfully", null);
+        } catch (ObjectNotFoundException e) {
+            return new Result(false, StatusCode.NOT_FOUND, e.getMessage(), null);
+        }
+    }
+
+    @PutMapping("/requests/{requestId}/reverse-decision")
+    public Result reverseApprovalRejectionDecision(@PathVariable String requestId) {
+        try {
+            Request updatedRequest = requestService.reverseApprovalRejectionDecision(requestId);
+            RequestDto updatedRequestDto = requestToRequestDtoConverter.convert(updatedRequest);
+            return new Result(true, StatusCode.SUCCESS, "Approval/rejection decision reversed successfully", updatedRequestDto);
+        } catch (ObjectNotFoundException e) {
+            return new Result(false, StatusCode.NOT_FOUND, e.getMessage(), null);
+        }
     }
 
 }

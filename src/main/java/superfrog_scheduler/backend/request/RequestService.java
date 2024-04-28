@@ -126,9 +126,6 @@ public class RequestService {
         // Implement notification logic here
     }
 
-
-
-
     // Method to check if cancellation is allowed (at least 2 days prior to the event date)
     private boolean isCancellationAllowed(LocalDateTime eventDateTime) {
         // Calculate the difference in days between current date and event date
@@ -138,6 +135,69 @@ public class RequestService {
 
         // Cancellation is allowed if the difference is at least 2 days
         return daysDifference >= 2;
+    }
+    public void markAppearanceRequestCompleted(String requestId) {
+        // Fetch the request by ID
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(() -> new ObjectNotFoundException("Request", requestId));
+
+        // Ensure the request is in the assigned status
+        if (request.getStatus() != RequestStatus.ASSIGNED) {
+            throw new IllegalStateException("The request must be in the 'Assigned' status to mark it as completed.");
+        }
+
+        // Check if the event has finished
+        LocalDateTime currentTime = LocalDateTime.now();
+        if (request.getEndTime().isAfter(currentTime)) {
+            throw new IllegalStateException("The event has not finished yet.");
+        }
+
+        // Update status to completed
+        request.setStatus(RequestStatus.COMPLETED);
+        requestRepository.save(request);
+
+        // Notify relevant actors (Spirit Director and Customer)
+        // Implement notification logic here
+    }
+    public Request markAppearanceAsIncomplete(String requestId) {
+        // Fetch the request by ID
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(() -> new ObjectNotFoundException("Request", requestId));
+
+        // Check if the request status is either Assigned or Completed
+        if (request.getStatus() != RequestStatus.ASSIGNED && request.getStatus() != RequestStatus.COMPLETED) {
+            throw new IllegalStateException("The request must be in the 'Assigned' or 'Completed' status to mark it as incomplete.");
+        }
+
+        // Check if the event has finished
+        LocalDateTime currentTime = LocalDateTime.now();
+        if (request.getEndTime().isAfter(currentTime)) {
+            throw new IllegalStateException("It is too early to confirm the appearance is incomplete.");
+        }
+
+        // Update status to incomplete
+        request.setStatus(RequestStatus.INCOMPLETE);
+        return requestRepository.save(request);
+    }
+
+    public Request reverseApprovalRejectionDecision(String requestId) {
+        // Fetch the request by ID
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(() -> new ObjectNotFoundException("Request", requestId));
+
+        // Reverse the approval/rejection decision
+        if (request.getStatus() == RequestStatus.APPROVED) {
+            // Rejection flow
+            request.setStatus(RequestStatus.REJECTED);
+            // Additional logic if needed
+        } else if (request.getStatus() == RequestStatus.REJECTED) {
+            // Approval flow
+            request.setStatus(RequestStatus.APPROVED);
+            // Additional logic if needed
+        }
+
+        // Save the updated request
+        return requestRepository.save(request);
     }
 
 }

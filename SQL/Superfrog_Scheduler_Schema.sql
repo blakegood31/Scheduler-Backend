@@ -79,10 +79,12 @@ insert into availability values('1234567890', '1001100011', '2024-04-18 12:30:00
 insert into customer values('0987654321', 'Victor', 'boschini', 'v.bo@tcu.edu', '1234567890');
 insert into request values('3131313131', '123 TCU St, Ft. Worth, TX, 76110', 'A birthday party for superfrog', '2024-04-18 12:30:00', '2024-04-18 14:00:00', 'Superfrog Birthday', 1, '1001100011', '0987654321', 'Dont tell anyone about the party. Its a surprise!', 'TCU Athletics, CSE, Neeley');
 insert into request values('4242424242', '123 TCU St, Ft. Worth, TX, 76110', 'A neeley fundraising event', '2024-04-18 12:30:00', '2024-04-18 14:00:00', 'Neeley Fundraiser', 2, '1001100011', '0987654321', 'TCU doesnt give neeley anything. We need more money', 'JP Morgan, Goldman Sachs');
-insert into request values('5353535353', '123 TCU St, Ft. Worth, TX, 76110', 'Frogs by 90', '2024-04-18 12:30:00', '2024-04-18 14:00:00', 'Football Game', 3, '1001100011', '0987654321', 'Superfrog is the only one that can save us now', 'TCU Athletics');
+insert into request values('5353535353', '123 TCU St, Ft. Worth, TX, 76110', 'Frogs by 90', '2024-04-18 12:30:00', '2024-04-18 14:00:00', 'Football Game', 3, '5315315315', '0987654321', 'Superfrog is the only one that can save us now', 'TCU Athletics');
+insert into request values('9898989898', '456 TCU St, Ft. Worth, TX, 76110', 'A really nice description', '2024-04-18 12:30:00', '2024-04-18 14:00:00', 'A Fun Event', 0, null, '0987654321', 'really special instructions', 'TCU Frogs');
 insert into user values(1, 'sf123', 'password', true, 'superfrog');
 insert into user values(2, 'john', '12345', true, 'admin');
 insert into user values(3, 'cust', '123', true, 'customer');
 
-
+select * from request;
+select * from student;
 

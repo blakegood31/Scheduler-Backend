@@ -1,17 +1,15 @@
 
 package superfrog_scheduler.backend.request;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import superfrog_scheduler.backend.request.converter.RequestDtoToRequestConverter;
 import superfrog_scheduler.backend.request.converter.RequestToRequestDtoConverter;
 import superfrog_scheduler.backend.request.dto.RequestDto;
+import superfrog_scheduler.backend.student.StudentService;
 import superfrog_scheduler.backend.system.Result;
 import superfrog_scheduler.backend.system.StatusCode;
-import superfrog_scheduler.backend.student.Student;
 import superfrog_scheduler.backend.student.StudentRepository;
-import superfrog_scheduler.backend.system.exceptions.ObjectNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,14 +20,17 @@ public class RequestController {
     private final RequestService requestService;
     private final RequestToRequestDtoConverter requestToRequestDtoConverter;
     private final RequestDtoToRequestConverter requestDtoToRequestConverter;
-    //private final StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
+
+    private final StudentService studentService;
 
     //Constructor
-    public RequestController(RequestService requestService, RequestToRequestDtoConverter requestToRequestDtoConverter, RequestDtoToRequestConverter requestDtoToRequestConverter) {
+    public RequestController(RequestService requestService, RequestToRequestDtoConverter requestToRequestDtoConverter, RequestDtoToRequestConverter requestDtoToRequestConverter, StudentRepository studentRepository, StudentService studentService) {
         this.requestService = requestService;
         this.requestToRequestDtoConverter = requestToRequestDtoConverter;
         this.requestDtoToRequestConverter = requestDtoToRequestConverter;
-        //this.studentRepository = studentRepository; // Initialize studentRepository
+        this.studentRepository = studentRepository;
+        this.studentService = studentService;
     }
 
 

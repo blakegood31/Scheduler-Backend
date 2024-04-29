@@ -45,6 +45,7 @@ public class RequestService {
         return this.requestRepository.findById(id).map(
                 pastRequest->{
                     pastRequest.setStatus(status);
+                    pastRequest.setSuperfrog(null);
                     return this.requestRepository.save(pastRequest);
                 }).orElseThrow(()->new ObjectNotFoundException("request",id));
     }

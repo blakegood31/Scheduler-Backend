@@ -1,10 +1,12 @@
 
 package superfrog_scheduler.backend.student;
 import org.springframework.web.bind.annotation.*;
+import superfrog_scheduler.backend.request.Request;
+import superfrog_scheduler.backend.student.converter.AssignedEventsToAssignedEventsDtoConverter;
 import superfrog_scheduler.backend.student.converter.StudentDtoToStudentConverter;
 import superfrog_scheduler.backend.student.converter.StudentToStudentDtoConverter;
+import superfrog_scheduler.backend.student.dto.AssignedEventsDto;
 import superfrog_scheduler.backend.student.dto.StudentDto;
-import superfrog_scheduler.backend.superfrog_calendar.SuperfrogCalendar;
 import superfrog_scheduler.backend.system.Result;
 import superfrog_scheduler.backend.system.StatusCode;
 
@@ -19,10 +21,13 @@ public class StudentController {
     private final StudentToStudentDtoConverter studentToStudentDtoConverter;
     private final StudentDtoToStudentConverter studentDtoToStudentConverter;
 
-    public StudentController(StudentService studentService, StudentToStudentDtoConverter studentToStudentDtoConverter, StudentDtoToStudentConverter studentDtoToStudentConverter) {
+    private final AssignedEventsToAssignedEventsDtoConverter assignedEventsToAssignedEventsDtoConverter;
+
+    public StudentController(StudentService studentService, StudentToStudentDtoConverter studentToStudentDtoConverter, StudentDtoToStudentConverter studentDtoToStudentConverter, AssignedEventsToAssignedEventsDtoConverter assignedEventsToAssignedEventsDtoConverter) {
         this.studentService = studentService;
         this.studentToStudentDtoConverter = studentToStudentDtoConverter;
         this.studentDtoToStudentConverter = studentDtoToStudentConverter;
+        this.assignedEventsToAssignedEventsDtoConverter = assignedEventsToAssignedEventsDtoConverter;
     }
 
     @GetMapping
@@ -66,6 +71,15 @@ public class StudentController {
         studentService.save(student);
         notifyProfileModification(student);
         return new Result(true, StatusCode.SUCCESS, "Profile updated successfully");
+    }
+
+    @GetMapping("/{sid}/assigned")
+    public Result getAssignedEvent(@PathVariable String sid){
+        Student student = this.studentService.findById(sid);
+        List<Request> studentRequests = student.getAssignedEvents();
+        AssignedEventsDto assignedEventsDto = this.assignedEventsToAssignedEventsDtoConverter.convert(studentRequests);
+        return new Result(true, StatusCode.SUCCESS, "Find assigned events success", assignedEventsDto);
+
     }
 
     private boolean validateProfile(StudentDto updatedStudentDto) {

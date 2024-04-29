@@ -1,5 +1,6 @@
 package superfrog_scheduler.backend.student;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import superfrog_scheduler.backend.request.Request;
 import superfrog_scheduler.backend.superfrog_calendar.SuperfrogCalendar;
@@ -32,8 +33,8 @@ public class Student {
     private String email;
 
     // Relationship mappings
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "superfrog")
-    private List<SuperfrogCalendar> availability = new ArrayList<>();
+    /*@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "superfrog")
+    private List<SuperfrogCalendar> availability = new ArrayList<>();*/
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "superfrog")
     private List<Request> assignedEvents = new ArrayList<>();
@@ -91,6 +92,26 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /*public List<SuperfrogCalendar> getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(List<SuperfrogCalendar> availability) {
+        this.availability = availability;
+    }*/
+    @JsonIgnore
+    public List<Request> getAssignedEvents() {
+        return assignedEvents;
+    }
+
+    /*public void addAssignedEvent(Request newEvent){
+        this.assignedEvents.add(newEvent);
+    }*/
+
+    public void setAssignedEvents(List<Request> assignedEvents) {
+        this.assignedEvents = assignedEvents;
     }
 
     /*public boolean isActive() {

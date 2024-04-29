@@ -1,5 +1,6 @@
 package superfrog_scheduler.backend.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import superfrog_scheduler.backend.customer.Customer;
 import superfrog_scheduler.backend.student.Student;

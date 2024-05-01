@@ -41,7 +41,7 @@ public class RequestService {
         return this.requestRepository.findByStatus(status);
     }*/
 
-    public Request updateRequestStatus(String id, RequestStatus status){ //Update status of a request
+    public Request updateRequestStatus(String id, RequestStatus status){ //Update status of a request-UC4
         return this.requestRepository.findById(id).map(
                 pastRequest->{
                     pastRequest.setStatus(status);
@@ -70,6 +70,9 @@ public class RequestService {
 
     public Request save(Request newRequest){ //Will be used to save new request
         return this.requestRepository.save(newRequest);
+    }
+    public List<Request> findByStatusAndStudent(RequestStatus status, Student student) {
+        return this.requestRepository.findByStatusAndStudent(status, student);
     }
     /*public List<Request> findRequestsByStudent(Student student) {
         return this.requestRepository.findBySuperfrog(student);

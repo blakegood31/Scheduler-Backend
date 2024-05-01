@@ -51,7 +51,7 @@ public class RequestController {
         return new Result(true, StatusCode.SUCCESS, "Find One Success", requestDto);
     }
 
-    @PutMapping("/requests/{id}/status/{status}") // Update status of a request
+    @PutMapping("/requests/{id}/status/{status}") // Update status of a request-UC4
     public Result updateRequestStatus(@PathVariable String id,@PathVariable RequestStatus status) {
         Request updateRequest = this.requestService.updateRequestStatus(id, status);
         RequestDto updateRequestDto = this.requestToRequestDtoConverter.convert(updateRequest);

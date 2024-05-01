@@ -1,12 +1,11 @@
 package superfrog_scheduler.backend.director;
 
 import jakarta.transaction.Transactional;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import superfrog_scheduler.backend.student.StudentRepository;
 import superfrog_scheduler.backend.student.Student;
+import superfrog_scheduler.backend.student.StudentRepository;
+import superfrog_scheduler.backend.student.utils.SuperFrogStudentSpecifications;
 import superfrog_scheduler.backend.system.exceptions.ObjectNotFoundException;
 
 import java.util.List;
@@ -16,23 +15,33 @@ import java.util.List;
 public class DirectorService {
     private final DirectorRepository directorRepository;
 
-    /*private final StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
-    private final PasswordEncoder passwordEncoder;*/
+    /*private final PasswordEncoder passwordEncoder;*/
+    private final SuperFrogStudentSpecifications superFrogStudentSpecifications;
 
-    public DirectorService(DirectorRepository directorRepository) {
+    public DirectorService(DirectorRepository directorRepository, StudentRepository studentRepository, SuperFrogStudentSpecifications superFrogStudentSpecifications) {
         this.directorRepository = directorRepository;
-        /*this.studentRepository = studentRepository;
-        this.passwordEncoder = passwordEncoder;*/
+        this.studentRepository = studentRepository;
+        /*this.passwordEncoder = passwordEncoder;*/
+        this.superFrogStudentSpecifications = superFrogStudentSpecifications;
     }
 
     public List<Director> findAll() {
         return this.directorRepository.findAll();
     }
 
+    //UC16
     public Director findById(String id) {
         return this.directorRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("user", id));
+    }
+
+    public List<Student> findSuperFrogStudent(String firstName, String lastName, String phoneNumber, String email){
+        Specification<Student> searchSpecification = superFrogStudentSpecifications
+                .superFrogStudentFilters(firstName, lastName, phoneNumber, email);
+
+        return this.studentRepository.findAll(searchSpecification);
     }
 
     /*public Director disableUser(String email) throws UsernameNotFoundException {
@@ -70,6 +79,7 @@ public class DirectorService {
         return this.directorRepository.save(oldUser);
     }
 
+    //UC14
     public void delete(String id) {
         this.directorRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("user", id));

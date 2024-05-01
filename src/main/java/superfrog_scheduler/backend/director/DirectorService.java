@@ -22,7 +22,6 @@ public class DirectorService {
     private final StudentRepository studentRepository;
 
    /* private final PasswordEncoder passwordEncoder;*/
-
     private final SuperFrogStudentSpecifications superFrogStudentSpecifications;
 
     public DirectorService(DirectorRepository directorRepository, StudentRepository studentRepository, SuperFrogStudentSpecifications superFrogStudentSpecifications) {

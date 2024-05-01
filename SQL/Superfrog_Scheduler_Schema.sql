@@ -1,3 +1,5 @@
+create database Superfrog_Scheduler;
+
 use Superfrog_Scheduler;
 
 drop table request;

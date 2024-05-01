@@ -3,7 +3,6 @@ package superfrog_scheduler.backend.request;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import superfrog_scheduler.backend.customer.Customer;
-import superfrog_scheduler.backend.paymentForm.dto.EventType;
 import superfrog_scheduler.backend.student.Student;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -54,9 +53,9 @@ public class Request {
    /* @Column(name = "event_date")
     private LocalDate eventDate;*/
 
-    private EventType eventType;
+    /*private String eventType;
 
-    /*private String clientFName;
+    private String clientFName;
 
     private String clientLName;
 
@@ -64,11 +63,11 @@ public class Request {
 
     private String clientEmail;
 
-    private String orgName;*/
+    private String orgName;
 
     private Double milesFromTCU;
 
-    /*private String expenses;*/
+    private String expenses;*/
 
     //Constructors
     public Request(){
@@ -183,17 +182,17 @@ public class Request {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
-    }*/
+    }
 
-    public EventType getEventType() {
+    public String getEventType() {
         return eventType;
     }
 
-    public void setEventType(EventType eventType) {
+    public void setEventType(String eventType) {
         this.eventType = eventType;
     }
 
-    /*public String getClientFName() {
+    public String getClientFName() {
         return clientFName;
     }
 
@@ -231,10 +230,8 @@ public class Request {
 
     public void setOrgName(String orgName) {
         this.orgName = orgName;
-    }*/
-    public Double getMileageOver(Double freeMileage) {
-        return this.milesFromTCU.compareTo(freeMileage) <= 0 ? 0.0 : this.milesFromTCU - freeMileage;
     }
+
     public Double getMilesFromTCU() {
         return milesFromTCU;
     }
@@ -243,7 +240,7 @@ public class Request {
         this.milesFromTCU = milesFromTCU;
     }
 
-    /*public String getExpenses() {
+    public String getExpenses() {
         return expenses;
     }
 

@@ -2,20 +2,12 @@ package superfrog_scheduler.backend.student;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import superfrog_scheduler.backend.paymentForm.PaymentForm;
-import superfrog_scheduler.backend.paymentForm.dto.EventType;
-import superfrog_scheduler.backend.paymentForm.dto.Period;
-import superfrog_scheduler.backend.paymentForm.dto.TransportationFeeCalculator;
 import superfrog_scheduler.backend.request.Request;
 import superfrog_scheduler.backend.superfrog_calendar.SuperfrogCalendar;
 
-import java.math.BigDecimal;
-import java.time.temporal.ChronoUnit;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "student")
@@ -129,33 +121,4 @@ public class Student {
     public void setActive(boolean active) {
         this.active = active;
     }*/
-    public PaymentForm generatePaymentForm(List<Request> requests, Period paymentPeriod) {
-        /**
-         * Group the given requests by their event type (TCU, NONPROFIT, and PRIVATE), then for each event type, calculate the number of hours
-         * this SuperFrogStudent has worked. The result of this step is a Map<EventType, Double>.
-         * For example:
-         *  EventType.TCU -> 2.5 hrs
-         *  EventType.NONPROFIT -> 3 hrs
-         *  EventType.PRIVATE -> 2 hrs
-         */
-        Map<EventType, Double> eventTypeHoursMap = requests.stream().collect(Collectors.groupingBy(request -> request.getEventType(),
-                Collectors.mapping(request -> request.getStartTime().until(request.getEndTime(), ChronoUnit.MINUTES) / 60.0,
-                        Collectors.reducing(0.0, Double::sum))));
-
-        BigDecimal totalAppearanceFee = new BigDecimal(0.0);
-
-        // Calculate the total appearance fee by going over the map.
-        for (Map.Entry<EventType, Double> entry : eventTypeHoursMap.entrySet()) {
-            totalAppearanceFee = totalAppearanceFee
-                    .add(BigDecimal.valueOf(entry.getKey().getHourlyRate())
-                            .multiply(BigDecimal.valueOf(entry.getValue())));
-        }
-
-        // We also need to consider transportation fee.
-        BigDecimal transportationFee = TransportationFeeCalculator.INSTANCE.calculateTransportationFee(requests);
-
-        BigDecimal totalAmount = totalAppearanceFee.add(transportationFee);
-
-        return new PaymentForm(this.firstName, this.lastName, this.id, paymentPeriod, totalAmount);
-    }
 }

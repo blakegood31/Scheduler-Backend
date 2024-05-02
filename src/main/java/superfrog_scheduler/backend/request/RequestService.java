@@ -72,7 +72,7 @@ public class RequestService {
         return this.requestRepository.save(newRequest);
     }
     public List<Request> findByStatusAndStudent(RequestStatus status, Student student) {
-        return this.requestRepository.findByStatusAndStudent(status, student);
+        return this.requestRepository.findByStatusAndStudent(status, student.getId());
     }
 
     /*public List<Request> findRequestsByStudent(Student student) {

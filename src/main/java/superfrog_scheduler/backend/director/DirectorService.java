@@ -43,7 +43,7 @@ public class DirectorService {
     }
     //UC15
     public List<Student> findSuperFrogStudent(String firstName, String lastName, String phoneNumber, String email){
-        Specification<Student> searchSpecification = superFrogStudentSpecifications
+        Specification<Student> searchSpecification = this.superFrogStudentSpecifications
                 .superFrogStudentFilters(firstName, lastName, phoneNumber, email);
 
         return this.studentRepository.findAll(searchSpecification);
@@ -57,9 +57,9 @@ public class DirectorService {
         studentToBeDisabled.setActive(false);
         this.studentRepository.save(studentToBeDisabled);
         return userToBeDisabled;
-    }*/
+    }
 
-    /*public Director enableUser(String email) throws UsernameNotFoundException {
+    public Director enableUser(String email) throws UsernameNotFoundException {
         Director userToBeEnabled = this.directorRepository.findByEmail(email).orElseThrow();
         userToBeEnabled.setActive(true);
         UserDetails userToBeEnabledDetails = new MyUserPrincipal(userToBeEnabled);
@@ -73,9 +73,9 @@ public class DirectorService {
     public Director save(Director newUser) {
         newUser.setPassword(this.passwordEncoder.encode(newUser.getPassword()));
         return this.directorRepository.save(newUser);
-    }*/
+    }
 
-    /*public Director update(String id, Director update) {
+    public Director update(String id, Director update) {
         Director oldUser = this.directorRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("user", id));
         oldUser.setActive(update.isActive());
@@ -87,9 +87,9 @@ public class DirectorService {
         this.directorRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("user", id));
         this.directorRepository.deleteById(id);
-    }*/
+    }
 
-    /*@Override
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return this.directorRepository.findByEmail(email)
                 .map(Director -> new MyUserPrincipal(Director))

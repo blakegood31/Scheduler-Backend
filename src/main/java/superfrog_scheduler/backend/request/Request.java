@@ -54,6 +54,7 @@ public class Request {
    /* @Column(name = "event_date")
     private LocalDate eventDate;*/
 
+    @Column(name = "event_type")
     private EventType eventType;
 
     /*private String clientFName;

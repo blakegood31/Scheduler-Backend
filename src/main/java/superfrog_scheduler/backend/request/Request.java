@@ -67,6 +67,7 @@ public class Request {
 
     private String orgName;*/
 
+    @Column(name="miles_from_tcu")
     private Double milesFromTCU;
 
     /*private String expenses;*/

@@ -1,6 +1,7 @@
 package superfrog_scheduler.backend.request.dto;
 
 import superfrog_scheduler.backend.customer.Customer;
+import superfrog_scheduler.backend.paymentForm.dto.EventType;
 import superfrog_scheduler.backend.request.RequestStatus;
 import superfrog_scheduler.backend.student.Student;
 import superfrog_scheduler.backend.student.dto.StudentDto;
@@ -17,6 +18,8 @@ public record RequestDto(String id,
                          Student superfrog,
                          Customer customer,
                          String specialInstructions,
-                         String other_orgs) {
+                         String other_orgs,
+                         EventType eventType,
+                         double milesFromTCU) {
 
 }

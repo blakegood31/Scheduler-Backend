@@ -22,6 +22,8 @@ public class RequestDtoToRequestConverter implements Converter<RequestDto, Reque
         request.setCustomer(source.customer());
         request.setSpecialInstructions(source.specialInstructions());
         request.setOther_orgs(source.other_orgs());
+        request.setEventType(source.eventType());
+        request.setMilesFromTCU(source.milesFromTCU());
         return request;
     }
 }

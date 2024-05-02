@@ -21,7 +21,9 @@ public class RequestToRequestDtoConverter implements Converter<Request, RequestD
                 source.getSuperfrog(),
                 source.getCustomer(),
                 source.getSpecialInstructions(),
-                source.getOther_orgs()
+                source.getOther_orgs(),
+                source.getEventType(),
+                source.getMilesFromTCU()
         );
         return request;
     }

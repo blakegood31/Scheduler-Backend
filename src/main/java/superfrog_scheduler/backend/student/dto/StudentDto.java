@@ -10,5 +10,5 @@ public record StudentDto(String id,
                          float performanceRating,
                          String phoneNumber,
                          String email,
-                         Boolean active){
+                         boolean active){
 }

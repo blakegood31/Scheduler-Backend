@@ -63,12 +63,15 @@ public class RequestService {
                     oldRequest.setCustomer(update.getCustomer());
                     oldRequest.setSpecialInstructions(update.getSpecialInstructions());
                     oldRequest.setOther_orgs(update.getOther_orgs());
+                    oldRequest.setEventType(update.getEventType());
+                    oldRequest.setMilesFromTCU(update.getMilesFromTCU());
                     return this.requestRepository.save(oldRequest);
                 })
                 .orElseThrow(() -> new ObjectNotFoundException("request", requestId));
     }
 
     public Request save(Request newRequest){ //Will be used to save new request
+        newRequest.setId(idWorker.nextId() + "");
         return this.requestRepository.save(newRequest);
     }
     public List<Request> findByStatusAndStudent(RequestStatus status, Student student) {

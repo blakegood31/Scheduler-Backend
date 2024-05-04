@@ -40,15 +40,16 @@ public class Student {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "active")
+    private boolean active;
+
+
     // Relationship mappings
     /*@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "superfrog")
     private List<SuperfrogCalendar> availability = new ArrayList<>();*/
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "superfrog")
     private List<Request> assignedEvents = new ArrayList<>();
-
-    //private boolean active;
-
 
     public Student() {
 
@@ -102,13 +103,21 @@ public class Student {
         this.email = email;
     }
 
-    /*public List<SuperfrogCalendar> getAvailability() {
-        return availability;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setAvailability(List<SuperfrogCalendar> availability) {
-        this.availability = availability;
-    }*/
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    /*public List<SuperfrogCalendar> getAvailability() {
+            return availability;
+        }
+
+        public void setAvailability(List<SuperfrogCalendar> availability) {
+            this.availability = availability;
+        }*/
     @JsonIgnore
     public List<Request> getAssignedEvents() {
         return assignedEvents;

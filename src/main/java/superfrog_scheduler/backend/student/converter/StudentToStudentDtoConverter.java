@@ -14,7 +14,8 @@ public class StudentToStudentDtoConverter {
                 student.getLastName(),
                 student.getPerformance_rating(),
                 student.getPhoneNumber(),
-                student.getEmail()
+                student.getEmail(),
+                student.isActive()
         );
         // Map other properties as needed
         return studentDto;

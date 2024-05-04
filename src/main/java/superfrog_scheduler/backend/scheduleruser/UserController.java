@@ -35,7 +35,7 @@ public class UserController {
         return new Result(true, StatusCode.SUCCESS, "Find all users success", userDtos);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId}") //can use for UC16
     public Result findUserById(@PathVariable Integer userId) {
         User foundUser = this.userService.findById(userId);
         UserDto userDto = this.userToUserDtoConverter.convert(foundUser);
@@ -68,4 +68,18 @@ public class UserController {
         this.userService.delete(userId);
         return new Result(true, StatusCode.SUCCESS, "Delete Success");
     }
+
+    @PutMapping("/{username}/disable") //UC14
+    public Result disableUser(@PathVariable String username) {
+        User updatedUser = this.userService.disableUser(username);
+        UserDto updatedUserDto = this.userToUserDtoConverter.convert(updatedUser);
+        return new Result(true, StatusCode.SUCCESS, "Disable User Success", updatedUserDto);
+    }
+    @PutMapping("/{username}/enable")
+    public Result enableUser(@PathVariable String username) {
+        User updatedUser = this.userService.enableUser(username);
+        UserDto updatedUserDto = this.userToUserDtoConverter.convert(updatedUser);
+        return new Result(true, StatusCode.SUCCESS, "Enable User Success", updatedUserDto);
+    }
+
 }

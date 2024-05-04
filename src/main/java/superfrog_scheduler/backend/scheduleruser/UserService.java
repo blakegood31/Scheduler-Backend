@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import superfrog_scheduler.backend.student.Student;
+import superfrog_scheduler.backend.student.StudentRepository;
 import superfrog_scheduler.backend.system.exceptions.ObjectNotFoundException;
 
 import java.util.List;
@@ -18,9 +20,12 @@ public class UserService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    private final StudentRepository studentRepository;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, StudentRepository studentRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.studentRepository = studentRepository;
     }
 
     public List<User> findAll() {
@@ -77,5 +82,28 @@ public class UserService implements UserDetailsService {
     private boolean isBcryptPassword(String password){
         Pattern bcryptPattern = Pattern.compile("\\A\\$2(a|y|b)?\\$(\\d\\d)\\$[./0-9A-Za-z]{53}");
         return bcryptPattern.matcher(password).matches();
+    }
+
+    //UC14
+    public User disableUser(String username) throws UsernameNotFoundException {
+        User userToBeDisabled = this.userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("username " + username + " is not found."));
+        userToBeDisabled.setEnabled(false);
+        this.userRepository.save(userToBeDisabled);
+        UserDetails userToBeDisabledDetails = new MyUserPrincipal(userToBeDisabled);
+        Student superFrogStudentToBeDisabled = this.studentRepository.findStudentByEmail(username);
+        superFrogStudentToBeDisabled.setActive(false);
+        this.studentRepository.save(superFrogStudentToBeDisabled);
+        return userToBeDisabled;
+    }
+
+    public User enableUser(String username) throws UsernameNotFoundException {
+        User userToBeEnabled = this.userRepository.findByUsername(username).orElseThrow();
+        userToBeEnabled.setEnabled(true);
+        UserDetails userToBeEnabledDetails = new MyUserPrincipal(userToBeEnabled);
+        this.userRepository.save(userToBeEnabled);
+        Student superFrogStudentToBeEnabled = this.studentRepository.findStudentByEmail(username);
+        superFrogStudentToBeEnabled.setActive(true);
+        this.studentRepository.save(superFrogStudentToBeEnabled);
+        return userToBeEnabled;
     }
 }

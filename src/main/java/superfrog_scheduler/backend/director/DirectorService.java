@@ -36,11 +36,7 @@ public class DirectorService {
         return this.directorRepository.findAll();
     }
 
-    //UC16
-    public Director findById(String id) {
-        return this.directorRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("user", id));
-    }
+
     //UC15
     public List<Student> findSuperFrogStudent(String firstName, String lastName, String phoneNumber, String email){
         Specification<Student> searchSpecification = this.superFrogStudentSpecifications

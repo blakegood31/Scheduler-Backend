@@ -2,8 +2,6 @@ package superfrog_scheduler.backend.scheduleruser;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import superfrog_scheduler.backend.director.Director;
-import superfrog_scheduler.backend.student.Student;
 
 @Entity
 @Table(name = "user")

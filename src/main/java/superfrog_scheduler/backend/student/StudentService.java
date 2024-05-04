@@ -1,7 +1,9 @@
 package superfrog_scheduler.backend.student;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import superfrog_scheduler.backend.student.utils.SuperFrogStudentSpecifications;
 import superfrog_scheduler.backend.system.exceptions.ObjectNotFoundException;
 import superfrog_scheduler.backend.utils.IdWorker;
 
@@ -13,8 +15,11 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final IdWorker idWorker;
 
-    public StudentService(StudentRepository studentRepository) {
+    private final SuperFrogStudentSpecifications superFrogStudentSpecifications;
+
+    public StudentService(StudentRepository studentRepository, SuperFrogStudentSpecifications superFrogStudentSpecifications) {
         this.studentRepository = studentRepository;
+        this.superFrogStudentSpecifications = superFrogStudentSpecifications;
         this.idWorker = new IdWorker();
     }
 
@@ -45,5 +50,13 @@ public class StudentService {
 
     public void assignAvailability(String studentId, String calendarId) {
         // Implement this method if needed
+    }
+
+    //UC15
+    public List<Student> findSuperFrogStudent(String firstName, String lastName, String phoneNumber, String email){
+        Specification<Student> searchSpecification = this.superFrogStudentSpecifications
+                .superFrogStudentFilters(firstName, lastName, phoneNumber, email);
+
+        return this.studentRepository.findAll(searchSpecification);
     }
 }

@@ -1,5 +1,6 @@
 
 package superfrog_scheduler.backend.student;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import superfrog_scheduler.backend.request.Request;
 import superfrog_scheduler.backend.student.converter.AssignedEventsToAssignedEventsDtoConverter;
@@ -118,5 +119,22 @@ public class StudentController {
     private void notifyProfileModification(Student student) {
         // Implement notification logic to notify relevant actors about the profile modification
         // For example, send an email notification to the Spirit Director
+    }
+
+    //UC15-find student frogs by name(first and/or last), email, or phone
+    @PostMapping("/searchFrogs")
+    public Result findSuperFrogStudent(@Valid @RequestBody StudentDto studentDto){
+
+        Student student = this.studentDtoToStudentConverter.convert(studentDto);
+
+        List<Student> students = this.studentService
+                .findSuperFrogStudent(student.getFirstName(), student.getLastName(), student.getPhoneNumber(), student.getEmail());
+
+        List<StudentDto> studentDtos = students
+                .stream()
+                .map(this.studentToStudentDtoConverter::convert)
+                .toList();
+
+        return new Result(true, StatusCode.SUCCESS, "Find Student Success", studentDtos);
     }
 }

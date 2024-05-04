@@ -16,6 +16,7 @@ public class StudentDtoToStudentConverter {
         student.setPerformance_rating(studentDto.performanceRating());
         student.setPhoneNumber(studentDto.phoneNumber());
         student.setEmail(studentDto.email());
+        student.setActive(studentDto.active());
         // Map other properties as needed
         return student;
     }
